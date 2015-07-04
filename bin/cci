@@ -20,5 +20,5 @@ end.parse!
 if $0 == __FILE__
   c = Crunch.new
 
-  pp c.json
+  pp c.values.length
 end

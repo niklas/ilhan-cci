@@ -6,6 +6,10 @@ class Crunch
     @json ||= JSON.parse( cached { download.read } )
   end
 
+  def values
+    json['data']['c']
+  end
+
   private
 
   def download
