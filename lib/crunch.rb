@@ -1,8 +1,9 @@
 require 'open-uri'
+require 'json'
 class Crunch
   include OpenURI
   def json
-    @json ||= cached { download.read }
+    @json ||= JSON.parse( cached { download.read } )
   end
 
   private

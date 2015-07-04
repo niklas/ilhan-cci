@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 
 require 'optparse'
+require 'pp'
 
 $:.unshift File.expand_path('../../lib', __FILE__)
 require 'cache'
@@ -19,5 +20,5 @@ end.parse!
 if $0 == __FILE__
   c = Crunch.new
 
-  puts c.json
+  pp c.json
 end
