@@ -1,11 +1,16 @@
 #!/usr/bin/env ruby
 
+require 'rubygems'
+require 'bundler/setup'
+
 require 'optparse'
 require 'pp'
+
 
 $:.unshift File.expand_path('../../lib', __FILE__)
 require 'cache'
 require 'crunch'
+require 'utils'
 
 options = {}
 OptionParser.new do |opts|
@@ -20,5 +25,5 @@ end.parse!
 if $0 == __FILE__
   c = Crunch.new
 
-  pp c.values.length
+  Utils.plot(c.values)
 end
