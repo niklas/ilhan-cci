@@ -1,7 +1,10 @@
 #!/usr/bin/env ruby
 
 require 'optparse'
-require 'open-uri'
+
+$:.unshift File.expand_path('../../lib', __FILE__)
+require 'cache'
+require 'crunch'
 
 options = {}
 OptionParser.new do |opts|
@@ -12,58 +15,6 @@ OptionParser.new do |opts|
   end
 end.parse!
 
-class Cache
-  def self.fetch(key, &block)
-    new(key).fetch(&block)
-  end
-  def initialize(key)
-    @key = key
-  end
-  def fetch
-    if File.exist?(@key)
-      File.read(@key)
-    else
-      write yield
-    end
-  end
-
-  private
-  def write(content)
-    File.open @key, 'w' do |f|
-      f.write content
-    end
-    content
-  end
-end
-
-class Crunch
-  include OpenURI
-  def json
-    @json ||= cached { download.read }
-  end
-
-  private
-
-  def download
-    open uri
-  end
-
-  def uri
-    "http://go.guidants.com/api/v1/services/charting/d/q?iid=133962&res=#{res}&eid=4"
-  end
-
-  def cached(&block)
-    Cache.fetch cache_path, &block
-  end
-
-  def cache_path
-    ".cci-#{res}"
-  end
-
-  def res
-    3600
-  end
-end
 
 if $0 == __FILE__
   c = Crunch.new
