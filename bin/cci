@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 
 require 'optparse'
+require 'open-uri'
 
 options = {}
 OptionParser.new do |opts|
@@ -11,5 +12,25 @@ OptionParser.new do |opts|
   end
 end.parse!
 
-p options
-p ARGV
+class Crunch
+  include OpenURI
+  def json
+    @json ||= download.read
+  end
+
+  private
+
+  def download
+    open uri
+  end
+
+  def uri
+    "http://go.guidants.com/api/v1/services/charting/d/q?iid=133962&res=3600&eid=4"
+  end
+end
+
+if $0 == __FILE__
+  c = Crunch.new
+
+  puts c.json
+end
