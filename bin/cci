@@ -12,10 +12,34 @@ OptionParser.new do |opts|
   end
 end.parse!
 
+class Cache
+  def self.fetch(key, &block)
+    new(key).fetch(&block)
+  end
+  def initialize(key)
+    @key = key
+  end
+  def fetch
+    if File.exist?(@key)
+      File.read(@key)
+    else
+      write yield
+    end
+  end
+
+  private
+  def write(content)
+    File.open @key, 'w' do |f|
+      f.write content
+    end
+    content
+  end
+end
+
 class Crunch
   include OpenURI
   def json
-    @json ||= download.read
+    @json ||= cached { download.read }
   end
 
   private
@@ -25,7 +49,19 @@ class Crunch
   end
 
   def uri
-    "http://go.guidants.com/api/v1/services/charting/d/q?iid=133962&res=3600&eid=4"
+    "http://go.guidants.com/api/v1/services/charting/d/q?iid=133962&res=#{res}&eid=4"
+  end
+
+  def cached(&block)
+    Cache.fetch cache_path, &block
+  end
+
+  def cache_path
+    ".cci-#{res}"
+  end
+
+  def res
+    3600
   end
 end
 
