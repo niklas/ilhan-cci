@@ -3,12 +3,12 @@ require 'spec_helper'
 describe 'unpacking' do
   let(:source) {{
     'data' => {
-      'c' => [ 16        , 607 , 312 , 1453 , 0]  ,
-      'h' => [ 14        , 0   , 752 , 0    , 589],
-      'l' => [ 1863      , 663 , 126 , 1607 , 151],
-      'ts' => [ 23931783 , 1   , 1   , 1    , 1]  ,
-      'o'  =>  [ 1108204, 21, 13, -29, -10]  ,
-      'v'  =>  [ 43512516, -37936441, 1597252, 3297702, -4109826],
+      'c' => [ 816        , 607       , 312     , 1453    , 0]        ,
+      'h' => [ 14         , 0         , 752     , 0       , 589]      ,
+      'l' => [ 1863       , 663       , 126     , 1607    , 151]      ,
+      'ts' => [ 23931783  , 1         , 1       , 1       , 1]        ,
+      'o'  =>  [ 1108204  , 21        , 13      , -29     , -10]      ,
+      'v'  =>  [ 43512516 , -37936441 , 1597252 , 3297702 , -4109826] ,
     }
   }}
 
@@ -22,19 +22,19 @@ describe 'unpacking' do
   it 'unpacks timestamp' do
     fun[0].should == 1435906980
   end
-  it 'unpacks [1]' do
+  it 'unpacks [1] (b + hi - cl)' do
     fun[1].should == 11074.02
   end
-  it 'unpacks [2]' do
+  it 'unpacks [2] (b)' do
     fun[2].should == 11082.04
   end
-  it 'unpacks [3]' do
+  it 'unpacks [3] (b+hi)' do
     fun[3].should == 11082.18
   end
-  it 'unpacks [4]' do
+  it 'unpacks [4] (b-lo)' do
     fun[4].should == 11063.41
   end
-  it 'unpacks [5]' do
+  it 'unpacks [5] (h)' do
     fun[5].should == 43512516
   end
 

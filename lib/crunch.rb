@@ -38,20 +38,21 @@ class Crunch
 
   def unpack
     m = []
-    h = b = z = 0
-    y = q = 0
+    h = b = z = 0.0
+    q = 0.0
+    y = 0
     r = nil
-    p = 100
+    p = 100.0
     # "f"
-    bc = 60
+    bc = 60.0
     c = json['data']
 
     ts = c['ts']
-    op = c['o']
-    va = c['v']
-    hi = c['h']
-    lo = c['l']
-    cl = c['c']
+    op = c['o'].map(&:to_f)
+    va = c['v'].map(&:to_f)
+    hi = c['h'].map(&:to_f)
+    lo = c['l'].map(&:to_f)
+    cl = c['c'].map(&:to_f)
 
     r = ts.length - 1
     while 2 > q
@@ -69,7 +70,7 @@ class Crunch
             b / p,
             (b + hi[y]) / p,
             (b - lo[y]) / p,
-            0
+            h
           ]
           b += hi[y] - cl[y]
           y += 1
