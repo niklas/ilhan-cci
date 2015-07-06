@@ -42,11 +42,12 @@ describe 'unpacking' do
     unpacked.first.should == [1435906980, 11074.02, 11082.04, 11082.18, 11063.41, 43512516]
   end
 
-  xit 'unpacks second line' do
+  it 'unpacks second line' do
     unpacked[1].should == [1435907040, 11068.16, 11074.23, 11074.23, 11067.6, 5576075]
   end
 
-  xit 'unpacks all' do
+  it 'unpacks all' do
+    unpacked.length.should == 5
     unpacked.should == [
       [1435906980, 11074.02, 11082.04, 11082.18, 11063.41, 43512516],
       [1435907040, 11068.16, 11074.23, 11074.23, 11067.6, 5576075],

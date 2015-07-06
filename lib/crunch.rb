@@ -59,7 +59,7 @@ class Crunch
       q += 1
 
       if true # hasVolume
-        while y < r
+        while y <= r
           z += ts[y] * bc
           b += op[y]
           h += va[y]
