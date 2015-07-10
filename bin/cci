@@ -25,6 +25,6 @@ end.parse!
 if $0 == __FILE__
   c = Crunch.new
 
-  Utils.plot(c.values, output: 'closing.png')
-  Utils.plot(c.cci, output: 'cci.png')
+  Utils.plot(c.values, output: 'closing.png', title: 'Closing values')
+  Utils.plot(c.cci, output: 'cci.png', title: 'Commodity Channel Index')
 end
