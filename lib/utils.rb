@@ -11,7 +11,7 @@ class Utils
         pl.terminal "png"
         pl.output( options.fetch(:output) { 'plot.png' } )
 
-        x = (0..values.length).collect { |v| v.to_f }
+        x = (0...values.length).collect { |v| v.to_f }
 
         pl.data << Gnuplot::DataSet.new( [x, values] ) do |ds|
           ds.with = "points"
