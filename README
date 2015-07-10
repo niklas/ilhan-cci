@@ -1,1 +1,9 @@
 A script to help study CCI trade tactics.
+
+
+Usage
+=====
+
+Just run `bin/cci` in your terminal.
+
+Options, see 'bin/cci --help'

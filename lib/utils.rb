@@ -16,8 +16,9 @@ class Utils
         end
 
         width = options.fetch(:width) { values.length / 3 }
+        height = options.fetch(:height) { 444 }
 
-        pl.terminal "png size #{width},400"
+        pl.terminal "png size #{width},#{height}"
         pl.output( options.fetch(:output) { 'plot.png' } )
 
       end

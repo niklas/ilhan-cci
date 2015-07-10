@@ -19,12 +19,26 @@ OptionParser.new do |opts|
   opts.on("-v", "--[no-]verbose", "Run verbosely") do |v|
     options[:verbose] = v
   end
+
+  opts.on("--width N", Integer, "Width of output image") do |v|
+    options[:width] = v
+  end
+  opts.on("--height N", Integer, "Height of output image") do |v|
+    options[:height] = v
+  end
 end.parse!
 
 
 if $0 == __FILE__
   c = Crunch.new
 
-  Utils.plot(c.values, output: 'closing.png', title: 'Closing values')
-  Utils.plot(c.cci, output: 'cci.png', title: 'Commodity Channel Index')
+
+  Utils.plot(c.values, options.merge(
+    output: 'closing.png',
+    title: 'Closing values',
+  ))
+  Utils.plot(c.cci, options.merge(
+    output: 'cci.png',
+    title: 'Commodity Channel Index',
+  ))
 end
