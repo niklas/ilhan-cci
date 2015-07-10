@@ -8,7 +8,7 @@ class Crunch
 
   # typical price (C+H+L)/3
   def values
-    unpacked.map { |u| (u[1] + u[3] + u[4]) / 3 }
+    unpacked.map(&:t)
   end
 
   def unpacked
@@ -40,6 +40,14 @@ class Crunch
         recent << price
         recent.shift while recent.length > period
       end
+    end
+  end
+
+  # it is a touple that is worth anything coming out of your nose
+  class Pupple < Struct.new(:time, :c, :o, :h, :l, :wth)
+    # "typical price"
+    def t
+      (c+h+l)/3
     end
   end
 
@@ -91,14 +99,14 @@ class Crunch
         b += op[y]
         h += va[y]
 
-        m << [
+        m << Pupple.new(
           z,
           (b + hi[y] - cl[y]) / p,
           b / p,
           (b + hi[y]) / p,
           (b - lo[y]) / p,
           h
-        ]
+        )
         b += hi[y] - cl[y]
         y += 1
       end
