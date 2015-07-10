@@ -12,10 +12,14 @@ class Crunch
   end
 
   def unpacked
-    @unpacked ||= unpack
+    @unpacked ||= unpack.last(200)
   end
 
-  def cci(options = {})
+  def cci
+    unpacked.map(&:cci)
+  end
+
+  def calculate_cci(options = {})
     period = options.fetch(:period) { 20 }
     factor = options.fetch(:factor) { 0.015 }
 
@@ -23,17 +27,17 @@ class Crunch
     recent = []
 
     [].tap do |cci|
-      values.each do |price|
+      unpacked.each do |pupple|
+        price = pupple.t
 
         if recent.length < period / 2
           # avoid division by zero and too much fluctuation at statrt
-          cci << 0
+          pupple.cci = 0
         else
           sma  = recent.reduce(&:+) / recent.length
           mean = recent.map { |p| p - sma }.map(&:abs).reduce(&:+) / recent.length
 
-          c = (price - sma) / (factor * mean)
-          cci << c
+          pupple.cci = (price - sma) / (factor * mean)
         end
 
         # keep the +period+ recent values
@@ -49,6 +53,8 @@ class Crunch
     def t
       (c+h+l)/3
     end
+
+    attr_accessor :cci
   end
 
   private

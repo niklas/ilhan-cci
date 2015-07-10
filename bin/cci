@@ -49,11 +49,13 @@ if $0 == __FILE__
              '-' + [options[:period], options[:factor], 'now'].reject(&:nil?).join('-')
            end
 
+  c.calculate_cci(options)
+
   Utils.plot(c.values, options.merge(
     output: "closing#{filefp}.png",
     title: 'Closing values',
   ))
-  Utils.plot(c.cci(options), options.merge(
+  Utils.plot(c.cci, options.merge(
     output: "cci#{filefp}.png",
     title: 'Commodity Channel Index',
   ))
