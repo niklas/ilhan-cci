@@ -19,7 +19,12 @@ class Utils
         height = options.fetch(:height) { 444 }
 
         pl.terminal "png size #{width},#{height}"
-        pl.output( options.fetch(:output) { 'plot.png' } )
+        file =  options.fetch(:output) { 'plot.png' }
+        pl.output(file)
+
+        if options[:verbose]
+          $stderr.puts "written #{file}"
+        end
 
       end
 

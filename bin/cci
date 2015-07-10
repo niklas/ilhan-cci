@@ -20,6 +20,10 @@ OptionParser.new do |opts|
     options[:verbose] = v
   end
 
+  opts.on('-t', '--tinker', 'Tinker mode, overwrite generated images, do not use magic names') do |v|
+    options[:tinker] = v
+  end
+
   opts.on("--width N", Integer, "Width of output image") do |v|
     options[:width] = v
   end
@@ -39,13 +43,18 @@ end.parse!
 if $0 == __FILE__
   c = Crunch.new
 
+  filefp = if options[:tinker]
+             ''
+           else
+             '-' + [options[:period], options[:factor], 'now'].reject(&:nil?).join('-')
+           end
 
   Utils.plot(c.values, options.merge(
-    output: 'closing.png',
+    output: "closing#{filefp}.png",
     title: 'Closing values',
   ))
   Utils.plot(c.cci(options), options.merge(
-    output: 'cci.png',
+    output: "cci#{filefp}.png",
     title: 'Commodity Channel Index',
   ))
 end
