@@ -7,3 +7,11 @@ Usage
 Just run `bin/cci` in your terminal.
 
 Options, see 'bin/cci --help'
+
+
+Examples
+========
+
+Minute resolution with standard values for CCI
+
+bin/cci -t -v --period 20 --factor 0.015 --resolution 60

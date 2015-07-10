@@ -32,6 +32,9 @@ OptionParser.new do |opts|
     options[:height] = v
   end
 
+  opts.on('--resolution N', Integer, "Resolution in seconds (default 3600) [not all values supported]") do |v|
+    options[:resolution] = v
+  end
   opts.on('--period N', Integer, "Number of values to calculate averages") do |v|
     options[:period] = v
   end
@@ -42,12 +45,16 @@ end.parse!
 
 
 if $0 == __FILE__
-  c = Crunch.new
+  c = Crunch.new(options)
 
   filefp = if options[:tinker]
              ''
            else
-             '-' + [options[:period], options[:factor], 'now'].reject(&:nil?).join('-')
+             '-' + [
+               options[:period],
+               options[:factor],
+               options[:resolution],
+             ].reject(&:nil?).join('-')
            end
 
   c.calculate_cci(options)

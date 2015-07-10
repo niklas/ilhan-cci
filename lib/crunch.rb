@@ -1,6 +1,10 @@
 require 'open-uri'
 require 'json'
 class Crunch
+  attr_reader :res
+  def initialize(options={})
+    @res = options.fetch(:resolution) { 3600 }
+  end
   include OpenURI
   def json
     @json ||= JSON.parse( cached { download.read } )
@@ -73,10 +77,6 @@ class Crunch
 
   def cache_path
     ".cci-#{res}"
-  end
-
-  def res
-    3600
   end
 
   def unpack
