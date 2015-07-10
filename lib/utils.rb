@@ -11,7 +11,7 @@ class Utils
         pl.timefmt '"%s"'
 
         pl.arbitrary_lines << 'set format x "%Y-%m-%d %H:%M"'
-        pl.arbitrary_lines << 'set xtics border mirror rotate by 80'
+        pl.arbitrary_lines << 'set xtics border mirror rotate'
 
         puppels = crunch.unpacked
         values = puppels.map(&meth)
