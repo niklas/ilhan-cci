@@ -14,7 +14,7 @@ class Utils
         x = (0...values.length).collect { |v| v.to_f }
 
         pl.data << Gnuplot::DataSet.new( [x, values] ) do |ds|
-          ds.with = "points"
+          ds.with = "lines"
           ds.notitle
         end
       end
