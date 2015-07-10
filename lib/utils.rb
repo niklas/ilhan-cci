@@ -8,15 +8,18 @@ class Utils
         pl.xlabel "i"
         pl.ylabel "c"
 
-        pl.terminal "png"
-        pl.output( options.fetch(:output) { 'plot.png' } )
-
         x = (0...values.length).collect { |v| v.to_f }
 
         pl.data << Gnuplot::DataSet.new( [x, values] ) do |ds|
           ds.with = "lines"
           ds.notitle
         end
+
+        width = options.fetch(:width) { values.length / 3 }
+
+        pl.terminal "png size #{width},400"
+        pl.output( options.fetch(:output) { 'plot.png' } )
+
       end
 
     end
