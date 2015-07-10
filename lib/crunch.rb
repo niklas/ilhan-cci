@@ -6,8 +6,9 @@ class Crunch
     @json ||= JSON.parse( cached { download.read } )
   end
 
+  # typical price (C+H+L)/3
   def values
-    unpacked.map { |u| u[1] }
+    unpacked.map { |u| (u[1] + u[3] + u[4]) / 3 }
   end
 
   def unpacked
