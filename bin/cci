@@ -26,6 +26,13 @@ OptionParser.new do |opts|
   opts.on("--height N", Integer, "Height of output image") do |v|
     options[:height] = v
   end
+
+  opts.on('--period N', Integer, "Number of values to calculate averages") do |v|
+    options[:period] = v
+  end
+  opts.on('--factor N', Float, "Lambert constant, defaults to 0.015") do |v|
+    options[:factor] = v
+  end
 end.parse!
 
 
@@ -37,7 +44,7 @@ if $0 == __FILE__
     output: 'closing.png',
     title: 'Closing values',
   ))
-  Utils.plot(c.cci, options.merge(
+  Utils.plot(c.cci(options), options.merge(
     output: 'cci.png',
     title: 'Commodity Channel Index',
   ))

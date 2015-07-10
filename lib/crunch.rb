@@ -16,10 +16,10 @@ class Crunch
 
   def cci(options = {})
     period = options.fetch(:period) { 20 }
+    factor = options.fetch(:factor) { 0.015 }
 
     # number of values to use for Simple Moving Average
     recent = []
-    factor = 0.015
 
     [].tap do |cci|
       values.each do |price|
