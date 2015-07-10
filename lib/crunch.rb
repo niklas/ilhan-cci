@@ -4,6 +4,7 @@ class Crunch
   attr_reader :res
   def initialize(options={})
     @res = options.fetch(:resolution) { 3600 }
+    @only = options.fetch(:only) { 300 }
   end
   include OpenURI
   def json
@@ -16,7 +17,7 @@ class Crunch
   end
 
   def unpacked
-    @unpacked ||= unpack.last(200)
+    @unpacked ||= unpack.last(@only)
   end
 
   def cci

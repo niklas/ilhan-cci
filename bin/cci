@@ -35,6 +35,9 @@ OptionParser.new do |opts|
   opts.on('--resolution N', Integer, "Resolution in seconds (default 3600) [not all values supported]") do |v|
     options[:resolution] = v
   end
+  opts.on('--only N', Float, "Only use the most N recent values") do |v|
+    options[:only] = v
+  end
   opts.on('--period N', Integer, "Number of values to calculate averages") do |v|
     options[:period] = v
   end
@@ -54,6 +57,7 @@ if $0 == __FILE__
                options[:period],
                options[:factor],
                options[:resolution],
+               options[:only],
              ].reject(&:nil?).join('-')
            end
 

@@ -12,6 +12,6 @@ Options, see 'bin/cci --help'
 Examples
 ========
 
-Minute resolution with standard values for CCI
+Minute resolution of last hour with standard values for CCI
 
-bin/cci -t -v --period 20 --factor 0.015 --resolution 60
+bin/cci -t -v --period 20 --factor 0.015 --resolution 60 --only 60
