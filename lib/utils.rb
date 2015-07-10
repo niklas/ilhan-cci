@@ -7,7 +7,7 @@ class Utils
         pl.title( options.fetch(:title) { 'ein paar Werte' } )
         pl.xlabel "Time"
         pl.xdata 'time'
-        pl.ylabel "c"
+        pl.ylabel options.fetch(:label) { "Werte" }
         pl.timefmt '"%s"'
 
         pl.arbitrary_lines << 'set format x "%Y-%m-%d %H:%M"'
