@@ -86,8 +86,6 @@ class Crunch
     y = 0
     r = nil
     p = 100.0
-    # "f"
-    bc = 60.0
     c = json['data']
 
     ts = c['ts']
@@ -101,7 +99,7 @@ class Crunch
 
     if true # hasVolume
       while y <= r
-        z += ts[y] * bc
+        z += ts[y] * res
         b += op[y]
         h += va[y]
 
