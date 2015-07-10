@@ -15,3 +15,9 @@ Examples
 Minute resolution of last hour with standard values for CCI
 
 bin/cci -t -v --period 20 --factor 0.015 --resolution 60 --only 60
+
+
+
+Simulate CCI-trading for the last 4 hours (minute-wise), start with 0 shares, buy when crossing -150, sell when crossing 120
+
+bin/cci -t -v --resolution 60 --only 240 --start_shares 0 --buy_cci -150 --sell_cci 120

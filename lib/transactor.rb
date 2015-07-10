@@ -6,11 +6,13 @@ class Transactor
     @io       = options.fetch(:io) { $stderr }
 
     # number of shares we start of (1 or 0)
-    @start    = options.fetch(:start) { 1 }
+    @start_shares = options.fetch(:start_shares) { 1 }
+    @start_money  = options.fetch(:start_money)  { 0 }.to_f
   end
 
   def run!
-    @have = @start
+    @have = @start_shares
+    @money = @start_money
     prev = 0
 
     @crunch.unpacked.each do |pup|
@@ -27,19 +29,43 @@ class Transactor
 
       prev = pup.cci
     end
+
+    summary
   end
 
   private
 
   def puts_balance(pup)
-    @io.puts "€%.2f   [CCI %.3f]" % [pup.t, pup.cci]
+    @io.puts "%s\t€%.2f\t[CCI %.3f]" % [fmttime(pup.time), pup.price, pup.cci]
   end
 
   def sell(pup)
-    @io.puts "SELL!"
+    if @have > 0
+      @money += pup.price
+      @have = 0
+      @io.puts "SELL! (now have €%.2f)" % @money
+    else
+      @io.puts "would sell, but don't have anything left"
+    end
   end
 
   def buy(pup)
-    @io.puts "BUY!"
+    if @have == 0
+      @money -= pup.price
+      @have = 1
+      @io.puts "BUY! (now have €%.2f)" % @money
+    else
+      @io.puts "would buy, but already have a share"
+    end
+  end
+
+  def summary
+    @io.puts "Started with €%.2f and %i shares, now have €%.2f and %i shares" % [
+                    @start_money,    @start_shares,     @money,    @have
+    ]
+  end
+
+  def fmttime(time)
+    time.strftime('%F %R')
   end
 end

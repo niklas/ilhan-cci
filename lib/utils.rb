@@ -17,7 +17,7 @@ class Utils
         puppels = crunch.unpacked
         values = puppels.map(&meth)
 
-        x = puppels.map(&:time)
+        x = puppels.map(&:epoch)
 
         pl.data << Gnuplot::DataSet.new( [x, values] ) do |ds|
           ds.with = "lines"

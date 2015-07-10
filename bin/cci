@@ -44,6 +44,20 @@ OptionParser.new do |opts|
   opts.on('--factor N', Float, "Lambert constant, defaults to 0.015") do |v|
     options[:factor] = v
   end
+
+  opts.on('--start_shares N', Integer, "Number of shares to start with (defaults to 1)") do |v|
+    options[:start_shares] = v
+  end
+  opts.on('--start_money N', Float, "Money in wallet at start (defaults to 0.00)") do |v|
+    options[:start_money] = v
+  end
+
+  opts.on('--sell_cci N', Integer, "CCI to sell the share (default: 100)") do |v|
+    options[:sell_cci] = v
+  end
+  opts.on('--buy_cci N', Integer, "CCI to buy one share (default: -100)") do |v|
+    options[:buy_cci] = v
+  end
 end.parse!
 
 
