@@ -73,4 +73,6 @@ if $0 == __FILE__
     output: "cci#{filefp}.png",
     title: 'Commodity Channel Index',
   ))
+
+  Utils.transact(c, options)
 end

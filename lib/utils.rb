@@ -1,4 +1,5 @@
 require 'gnuplot'
+require 'transactor'
 class Utils
   def self.plot(crunch, meth, options={})
     Gnuplot.open do |gp|
@@ -38,5 +39,9 @@ class Utils
       end
 
     end
+  end
+
+  def self.transact(crunch, options={})
+    Transactor.new(options.merge(crunch: crunch)).run!
   end
 end
