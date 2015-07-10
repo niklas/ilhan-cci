@@ -14,6 +14,34 @@ class Crunch
     @unpacked ||= unpack
   end
 
+  def cci(options = {})
+    period = options.fetch(:period) { 20 }
+
+    # number of values to use for Simple Moving Average
+    recent = []
+    factor = 0.015
+
+    [].tap do |cci|
+      values.each do |price|
+
+        if recent.length < period / 2
+          # avoid division by zero and too much fluctuation at statrt
+          cci << 0
+        else
+          sma  = recent.reduce(&:+) / recent.length
+          mean = recent.map { |p| p - sma }.map(&:abs).reduce(&:+) / recent.length
+
+          c = (price - sma) / (factor * mean)
+          cci << c
+        end
+
+        # keep the +period+ recent values
+        recent << price
+        recent.shift while recent.length > period
+      end
+    end
+  end
+
   private
 
   def download
