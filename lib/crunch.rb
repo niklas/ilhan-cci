@@ -83,29 +83,26 @@ class Crunch
     cl = c['c'].map(&:to_f)
 
     r = ts.length - 1
-    while 2 > q
-      q += 1
 
-      if true # hasVolume
-        while y <= r
-          z += ts[y] * bc
-          b += op[y]
-          h += va[y]
+    if true # hasVolume
+      while y <= r
+        z += ts[y] * bc
+        b += op[y]
+        h += va[y]
 
-          m << [
-            z,
-            (b + hi[y] - cl[y]) / p,
-            b / p,
-            (b + hi[y]) / p,
-            (b - lo[y]) / p,
-            h
-          ]
-          b += hi[y] - cl[y]
-          y += 1
-        end
+        m << [
+          z,
+          (b + hi[y] - cl[y]) / p,
+          b / p,
+          (b + hi[y]) / p,
+          (b - lo[y]) / p,
+          h
+        ]
+        b += hi[y] - cl[y]
+        y += 1
       end
-
     end
+
 
 
     m
