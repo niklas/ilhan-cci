@@ -54,9 +54,14 @@ class Crunch
 
   # it is a touple that is worth anything coming out of your nose
   class Pupple < Struct.new(:time, :c, :o, :h, :l, :wth)
+    TZDiff = 3
     # "typical price"
     def t
       (c+h+l)/3
+    end
+
+    def time
+      super + (TZDiff*60*60)
     end
 
     attr_accessor :cci
