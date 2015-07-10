@@ -1,12 +1,15 @@
 require 'gnuplot'
 class Utils
-  def self.plot(values, options={})
+  def self.plot(crunch, meth, options={})
     Gnuplot.open do |gp|
       Gnuplot::Plot.new( gp ) do |pl|
 
         pl.title( options.fetch(:title) { 'ein paar Werte' } )
         pl.xlabel "i"
         pl.ylabel "c"
+
+        puppels = crunch.unpacked
+        values = puppels.map(&meth)
 
         x = (0...values.length).collect { |v| v.to_f }
 
