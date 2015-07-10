@@ -7,7 +7,7 @@ class Crunch
   end
 
   def values
-    json['data']['c']
+    unpacked.map { |u| u[1] }
   end
 
   def unpacked
