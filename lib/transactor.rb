@@ -19,10 +19,12 @@ class Transactor
       puts_balance(pup)
 
 
+      # oben nach unten durch upper cci
       if prev > @sell_cci && @sell_cci >= pup.cci
         sell(pup)
       end
 
+      # von unten nach oben durch lower cci
       if prev < @buy_cci && @buy_cci <= pup.cci
         buy(pup)
       end
