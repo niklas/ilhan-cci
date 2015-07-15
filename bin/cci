@@ -38,7 +38,7 @@ OptionParser.new do |opts|
   opts.on('--only N', Float, "Only use the most N recent values") do |v|
     options[:only] = v
   end
-  opts.on('--period N', Integer, "Number of values to calculate averages") do |v|
+  opts.on('--period N', Integer, "Number of values to calculate averages (20)") do |v|
     options[:period] = v
   end
   opts.on('--factor N', Float, "Lambert constant, defaults to 0.015") do |v|
