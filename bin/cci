@@ -4,6 +4,7 @@ require 'rubygems'
 require 'bundler/setup'
 
 require 'optparse'
+require 'optparse/time'
 require 'pp'
 require 'pry'
 
@@ -35,8 +36,11 @@ OptionParser.new do |opts|
   opts.on('--resolution N', Integer, "Resolution in seconds (default 3600) [not all values supported]") do |v|
     options[:resolution] = v
   end
-  opts.on('--only N', Float, "Only use the most N recent values") do |v|
-    options[:only] = v
+  opts.on('--after TIME', Time, "Use only values after given TIME") do |v|
+    options[:after] = v
+  end
+  opts.on('--before TIME', Time, "Use only values before given TIME") do |v|
+    options[:before] = v
   end
   opts.on('--period N', Integer, "Number of values to calculate averages (20)") do |v|
     options[:period] = v
@@ -71,7 +75,8 @@ if $0 == __FILE__
                options[:period],
                options[:factor],
                options[:resolution],
-               options[:only],
+               options[:after],
+               options[:before],
              ].reject(&:nil?).join('-')
            end
 

@@ -4,7 +4,8 @@ class Crunch
   attr_reader :res
   def initialize(options={})
     @res = options.fetch(:resolution) { 3600 }
-    @only = options.fetch(:only) { 300 }
+    @after = options[:after]
+    @before = options[:before]
   end
   include OpenURI
   def json
@@ -17,7 +18,19 @@ class Crunch
   end
 
   def unpacked
-    @unpacked ||= unpack.last(@only)
+    @unpacked ||= begin
+                    l = unpack
+                    if @after
+                      l = l.select { |p| @after <= p.time }
+                    end
+                    if @before
+                      l = l.select { |p| p.time <= @before }
+                    end
+                    if l.empty?
+                      raise "no data found between #{@after} and #{@before}"
+                    end
+                    l
+                  end
   end
 
   def cci
