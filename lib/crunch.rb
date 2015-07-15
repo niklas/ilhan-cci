@@ -79,6 +79,10 @@ class Crunch
       super + (TZDiff*60*60)
     end
 
+    def utc
+      epoch + (2*60*60)
+    end
+
     def time
       Time.at epoch
     end
