@@ -46,6 +46,7 @@ class Transactor
       @money += pup.price
       @have = 0
       @io.puts "SELL! (now have €%.2f)" % @money
+      provision!
     else
       @io.puts "would sell, but don't have anything left"
     end
@@ -56,9 +57,15 @@ class Transactor
       @money -= pup.price
       @have = 1
       @io.puts "BUY! (now have €%.2f)" % @money
+      provision!
     else
       @io.puts "would buy, but already have a share"
     end
+  end
+
+  def provision!
+    @money -= 2.0 # provision
+    @io.puts "Provision -2€! (now have €%.2f)" % @money
   end
 
   def summary
