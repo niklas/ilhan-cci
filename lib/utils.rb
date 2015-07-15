@@ -36,6 +36,12 @@ class Utils
           $stderr.puts "written #{file}"
         end
 
+        puppels.each do |pup|
+          if pup.action
+            pl.arbitrary_lines << circle(pup, meth)
+          end
+        end
+
       end
 
     end
@@ -43,5 +49,19 @@ class Utils
 
   def self.transact(crunch, options={})
     Transactor.new(options.merge(crunch: crunch)).run!
+  end
+
+  def self.circle(pup, meth)
+    x = pup.utc
+    y = pup.send(meth).to_i
+    color = case pup.action
+            when :sell
+              'light-blue'
+            when :buy
+              'orange'
+            else
+              'pink'
+            end
+    %Q~set object circle at first "#{x}",#{y} size screen 0.01 fc rgb "#{color}"~
   end
 end
