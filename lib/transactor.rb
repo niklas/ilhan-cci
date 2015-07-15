@@ -6,7 +6,7 @@ class Transactor
     @io       = options.fetch(:io) { $stderr }
 
     # number of shares we start of (1 or 0)
-    @start_shares = options.fetch(:start_shares) { 1 }
+    @start_shares = options.fetch(:start_shares) { 0 }
     @start_money  = options.fetch(:start_money)  { 0 }.to_f
   end
 
