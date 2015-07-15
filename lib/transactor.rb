@@ -8,6 +8,8 @@ class Transactor
     # number of shares we start of (1 or 0)
     @start_shares = options.fetch(:start_shares) { 0 }
     @start_money  = options.fetch(:start_money)  { 0 }.to_f
+
+    @verbose    = options.fetch(:verbose) { false }
   end
 
   def run!
@@ -16,7 +18,7 @@ class Transactor
     prev = 0
 
     @crunch.unpacked.each do |pup|
-      puts_balance(pup)
+      puts_pupple(pup) if @verbose
 
 
       # oben nach unten durch upper cci
@@ -37,7 +39,7 @@ class Transactor
 
   private
 
-  def puts_balance(pup)
+  def puts_pupple(pup)
     @io.puts "%s\t€%.2f\t[CCI %.3f]" % [fmttime(pup.time), pup.price, pup.cci]
   end
 
