@@ -50,9 +50,6 @@ OptionParser.new do |opts|
     options[:factor] = v
   end
 
-  opts.on('--start_shares N', Integer, "Number of shares to start with (defaults to 0)") do |v|
-    options[:start_shares] = v
-  end
   opts.on('--start_money N', Float, "Money in wallet at start (defaults to 0.00)") do |v|
     options[:start_money] = v
   end

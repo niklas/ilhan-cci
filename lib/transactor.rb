@@ -13,36 +13,51 @@ class Transactor
     @verbose    = options.fetch(:verbose) { false }
   end
 
+
+  # 1. position ist 
+  #   a) leerverkauf bei durchquerrung von upper von oben nach unten
+  #   b) kauf bei durchquerung von lower von unten oder oben
+  #
+
   def run!
-    @have = @start_shares
     @money = @start_money
-    prev = 0
+    @position = nil
+    prev = nil
 
     @crunch.unpacked.each do |pup|
       puts_pupple(pup) if @verbose
 
-
-      # oben nach unten durch upper cci
-      if prev > @sell_cci && @sell_cci >= pup.cci
-        sell(pup)
+      if prev
+        case @position
+        when :short  # \
+             # from above through lower => WIN
+          if (prev.cci > @buy_cci && @buy_cci >= pup.cci) ||
+             # back to upper  => LOOSE
+             (prev.cci < @sell_cci && @sell_cci <= pup.cci)
+            buy pup, nil
+          end
+        when :long   # /
+             # from below through upper => WIN
+          if (prev.cci < @sell_cci && @sell_cci <= pup.cci) ||
+             # back to lower => LOOSE
+             (prev.cci > @buy_cci && @buy_cci >= pup.cci)
+            sell pup, nil
+          end
+        when nil # must wait for an intrusion from outside into cci-band
+          # from above
+          if prev.cci > @sell_cci && @sell_cci >= pup.cci
+            sell pup, :short
+          end
+          # from below
+          if prev.cci < @buy_cci && @buy_cci <= pup.cci
+            buy pup, :long
+          end
+        else
+          raise "unknown position #{@position}"
+        end
       end
 
-      # von unten nach oben durch upper cci
-      if prev < @sell_cci && @sell_cci <= pup.cci
-        sell(pup)
-      end
-
-      # von unten nach oben durch lower cci
-      if prev < @buy_cci && @buy_cci <= pup.cci
-        buy(pup)
-      end
-
-      # von oben nach unten durch lower cci
-      if prev > @buy_cci && @buy_cci >= pup.cci
-        buy(pup)
-      end
-
-      prev = pup.cci
+      prev = pup
     end
 
     summary
@@ -54,28 +69,20 @@ class Transactor
     @io.puts "%s\t€%.2f\t[CCI %.3f]" % [fmttime(pup.time), pup.price, pup.cci]
   end
 
-  def sell(pup)
-    if @have > -1
-      @money += pup.price
-      @have -= 1
-      @io.puts "SELL! (now have €%.2f)" % @money
-      pup.action = :sell
-      provision!
-    else
-      @io.puts "would sell, but don't have anything left"
-    end
+  def sell(pup, pos)
+    @money += pup.price
+    @position = pos
+    @io.puts "SELL! (now have €%.2f)" % @money
+    pup.action = :sell
+    provision!
   end
 
-  def buy(pup)
-    if @have < 1
-      @money -= pup.price
-      @have += 1
-      @io.puts "BUY! (now have €%.2f)" % @money
-      pup.action = :buy
-      provision!
-    else
-      @io.puts "would buy, but already have a share"
-    end
+  def buy(pup, pos)
+    @money -= pup.price
+    @position = pos
+    @io.puts "BUY! (now have €%.2f)" % @money
+    pup.action = :buy
+    provision!
   end
 
   def provision!
@@ -84,8 +91,8 @@ class Transactor
   end
 
   def summary
-    @io.puts "Started with €%.2f and %i shares, now have €%.2f and %i shares" % [
-                    @start_money,    @start_shares,     @money,    @have
+    @io.puts "Started with €%.2f and %i shares, now have €%.2f" % [
+                    @start_money,    @start_shares,     @money
     ]
   end
 
