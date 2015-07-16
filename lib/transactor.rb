@@ -123,7 +123,7 @@ class Transactor
              [i, @before.price, fmttime(@before.time), pos] )
     @io.puts( %Q~     Schlusskurs %.2f Enddatum %s~ %
              [ pup.price, pup.time ])
-    @io.puts( %Q~     4.00 +- %.2f = %.2f~ %
+    @io.puts( %Q~     4.00 +- Gewinn %.2f = %.2f (Balance)~ %
              [ diff, @money ])
     @io.puts
   end
