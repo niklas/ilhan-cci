@@ -82,7 +82,7 @@ if $0 == __FILE__
 
   c.calculate_cci(options)
 
-  Utils.transact(c, options)
+  tr = Utils.transact(c, options)
 
   Utils.plot(c, :t, options.merge(
     label: 'hlc3',
@@ -93,6 +93,8 @@ if $0 == __FILE__
     label: 'cci',
     output: "cci#{filefp}.png",
     title: 'Commodity Channel Index',
+    sell_cci: tr.sell_cci,
+    buy_cci: tr.buy_cci,
   ))
 
 end

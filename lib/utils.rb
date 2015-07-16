@@ -42,13 +42,20 @@ class Utils
           end
         end
 
+        if meth == :cci
+          upper, lower = options.fetch(:sell_cci), options.fetch(:buy_cci)
+          f, l = puppels.first, puppels.last
+          pl.arbitrary_lines << %Q~set arrow from "#{f.utc}",#{upper} to "#{l.utc}",#{upper} nohead fc rgb "red"~
+          pl.arbitrary_lines << %Q~set arrow from "#{f.utc}",#{lower} to "#{l.utc}",#{lower} nohead fc rgb "green"~
+        end
+
       end
 
     end
   end
 
   def self.transact(crunch, options={})
-    Transactor.new(options.merge(crunch: crunch)).run!
+    Transactor.new(options.merge(crunch: crunch)).tap(&:run!)
   end
 
   def self.circle(pup, meth)

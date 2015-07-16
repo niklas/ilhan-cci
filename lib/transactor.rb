@@ -1,4 +1,5 @@
 class Transactor
+  attr_reader :sell_cci, :buy_cci
   def initialize(options={})
     @crunch   = options.fetch(:crunch)
     @sell_cci = options.fetch(:sell_cci) { 100 }
