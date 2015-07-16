@@ -24,6 +24,7 @@ class Transactor
     @position = nil
     prev = nil
     @price_before = nil
+    @transaction_index = 0
 
     @crunch.unpacked.each do |pup|
       puts_pupple(pup) if @verbose
@@ -114,8 +115,10 @@ class Transactor
   end
 
   def profit!(pup)
+    @transaction_index += 1
+
     diff = pup.price - @price_before
-    @io.puts( ">> €%.2f Gewinn" % diff)
+    @io.puts( ">> (%i) €%.2f Gewinn" % [@transaction_index, diff])
   end
 
   def summary

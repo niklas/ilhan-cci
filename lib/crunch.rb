@@ -89,6 +89,7 @@ class Crunch
 
     attr_accessor :cci
     attr_accessor :action
+    attr_accessor :trans_index
   end
 
   private
