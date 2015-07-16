@@ -34,23 +34,23 @@ class Transactor
           if (prev.cci > @buy_cci && @buy_cci >= pup.cci) ||
              # back to upper  => LOOSE
              (prev.cci < @sell_cci && @sell_cci <= pup.cci)
-            buy pup, nil
+            short_buy pup
           end
         when :long   # /
              # from below through upper => WIN
           if (prev.cci < @sell_cci && @sell_cci <= pup.cci) ||
              # back to lower => LOOSE
              (prev.cci > @buy_cci && @buy_cci >= pup.cci)
-            sell pup, nil
+            long_sell pup
           end
         when nil # must wait for an intrusion from outside into cci-band
           # from above
           if prev.cci > @sell_cci && @sell_cci >= pup.cci
-            sell pup, :short
+            short_sell pup
           end
           # from below
           if prev.cci < @buy_cci && @buy_cci <= pup.cci
-            buy pup, :long
+            long_buy pup
           end
         else
           raise "unknown position #{@position}"
@@ -67,6 +67,22 @@ class Transactor
 
   def puts_pupple(pup)
     @io.puts "%s\t€%.2f\t[CCI %.3f]" % [fmttime(pup.time), pup.price, pup.cci]
+  end
+
+  def short_sell(pup)
+    sell pup, :short
+  end
+
+  def short_buy(pup)
+    buy pup, nil
+  end
+
+  def long_sell(pup)
+    sell pup, nil
+  end
+
+  def long_buy(pup)
+    buy pup, :long
   end
 
   def sell(pup, pos)
