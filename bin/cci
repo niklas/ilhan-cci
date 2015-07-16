@@ -64,6 +64,9 @@ OptionParser.new do |opts|
   opts.on('--[no-]annual', 'Use annual data from db/annual.txt') do |v|
     options[:annual] = v
   end
+  opts.on('--[no-]tradenumbers', 'Zahlen und Bubbels bei abgeschlossenen Positionen anzeigen') do |v|
+    options[:show_trade_numbers] = v
+  end
 end.parse!
 
 

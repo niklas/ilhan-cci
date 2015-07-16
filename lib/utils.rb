@@ -36,9 +36,11 @@ class Utils
           $stderr.puts "written #{file}"
         end
 
-        puppels.each do |pup|
-          if pup.action
-            pl.arbitrary_lines << circle(pup, meth)
+        if options[:show_trade_numbers]
+          puppels.each do |pup|
+            if pup.action
+              pl.arbitrary_lines << circle(pup, meth)
+            end
           end
         end
 
