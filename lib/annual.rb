@@ -11,15 +11,20 @@ class Annual < Crunch
         epoch = Time.new($3.to_i, $2.to_i, $1.to_i).to_i
         list << Pupple.new(
           epoch,
-          cl.to_f,
-          op.to_f,
-          hi.to_f,
-          lo.to_f,
+          german_num(cl),
+          german_num(op),
+          german_num(hi),
+          german_num(lo),
           nil
         )
       end
     end
 
     list.sort_by(&:epoch)
+  end
+
+
+  def german_num(s)
+    s.gsub('.','').sub(',','.').to_f
   end
 end
