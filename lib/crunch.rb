@@ -53,8 +53,7 @@ class Crunch
           pupple.cci = 0
         else
           sma  = recent.reduce(&:+) / recent.length
-          # Standardabweichung
-          mean = recent.map { |p| (p - sma)**2 }.reduce(&:+) / (recent.length-1)
+          mean = recent.map { |p| p - sma }.map(&:abs).reduce(&:+) / recent.length
 
           pupple.cci = (price - sma) / (factor * mean)
         end
