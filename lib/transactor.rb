@@ -26,8 +26,18 @@ class Transactor
         sell(pup)
       end
 
+      # von unten nach oben durch upper cci
+      if prev < @sell_cci && @sell_cci <= pup.cci
+        sell(pup)
+      end
+
       # von unten nach oben durch lower cci
       if prev < @buy_cci && @buy_cci <= pup.cci
+        buy(pup)
+      end
+
+      # von oben nach unten durch lower cci
+      if prev > @buy_cci && @buy_cci >= pup.cci
         buy(pup)
       end
 
@@ -44,9 +54,9 @@ class Transactor
   end
 
   def sell(pup)
-    if @have > 0
+    if @have > -1
       @money += pup.price
-      @have = 0
+      @have -= 1
       @io.puts "SELL! (now have €%.2f)" % @money
       pup.action = :sell
       provision!
@@ -56,9 +66,9 @@ class Transactor
   end
 
   def buy(pup)
-    if @have == 0
+    if @have < 1
       @money -= pup.price
-      @have = 1
+      @have += 1
       @io.puts "BUY! (now have €%.2f)" % @money
       pup.action = :buy
       provision!

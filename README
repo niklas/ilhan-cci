@@ -27,6 +27,4 @@ bin/cci -t -v --resolution 60 --only 240 --start_shares 0 --buy_cci -150 --sell_
 BUGS
 
 
-SELL/BUY auf in reverse, bei jeder Querung von 100/-100
-
 Linie bei 100/-100
