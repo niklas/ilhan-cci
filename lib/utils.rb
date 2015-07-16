@@ -69,6 +69,13 @@ class Utils
             else
               'pink'
             end
-    %Q~set object circle at first "#{x}",#{y} size screen 0.01 fc rgb "#{color}"~
+
+    msg = %Q~set object circle at first "#{x}",#{y} size screen 0.005 fc rgb "#{color}"~
+
+    if i = pup.trans_index
+      msg += %Q~\nset label #{i} at "#{x}",#{y} "#{i}"~
+    end
+
+    msg
   end
 end

@@ -23,7 +23,7 @@ class Transactor
     @money = @start_money
     @position = nil
     prev = nil
-    @price_before = nil
+    @before = nil
     @transaction_index = 0
 
     @crunch.unpacked.each do |pup|
@@ -72,31 +72,31 @@ class Transactor
   end
 
   def short_sell(pup)
-    @price_before = pup.price
+    @before = pup
     sell pup, :short
   end
 
   def short_buy(pup)
     buy pup, nil
-    profit! pup
-    @price_before = nil
+    profit! pup, 'short'
+    @before = nil
   end
 
   def long_sell(pup)
     sell pup, nil
-    profit! pup
-    @price_before = nil
+    profit! pup, 'long'
+    @before = nil
   end
 
   def long_buy(pup)
-    @price_before = pup.price
+    @before = pup
     buy pup, :long
   end
 
   def sell(pup, pos)
     @money += pup.price
     @position = pos
-    @io.puts "#{fmttime(pup.time)} SELL! (now have €%.2f)" % @money
+    #@io.puts "#{fmttime(pup.time)} SELL! (now have €%.2f)" % @money
     pup.action = :sell
     provision!
   end
@@ -104,21 +104,28 @@ class Transactor
   def buy(pup, pos)
     @money -= pup.price
     @position = pos
-    @io.puts "#{fmttime(pup.time)} BUY! (now have €%.2f)" % @money
+    #@io.puts "#{fmttime(pup.time)} BUY! (now have €%.2f)" % @money
     pup.action = :buy
     provision!
   end
 
   def provision!
     @money -= 2.0 # provision
-    @io.puts "Provision -2€! (now have €%.2f)" % @money
   end
 
-  def profit!(pup)
+  def profit!(pup, pos)
     @transaction_index += 1
+    i = pup.trans_index = @transaction_index
 
-    diff = pup.price - @price_before
-    @io.puts( ">> (%i) €%.2f Gewinn" % [@transaction_index, diff])
+    diff = pup.price - @before.price
+
+    @io.puts( %Q~(%i) Eröffnungskurs %.2f Datum %s %s~ %
+             [i, @before.price, fmttime(@before.time), pos] )
+    @io.puts( %Q~     Schlusskurs %.2f Enddatum %s~ %
+             [ pup.price, pup.time ])
+    @io.puts( %Q~     4.00 +- %.2f = %.2f~ %
+             [ diff, @money ])
+    @io.puts
   end
 
   def summary
