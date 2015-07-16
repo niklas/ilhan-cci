@@ -23,6 +23,7 @@ class Transactor
     @money = @start_money
     @position = nil
     prev = nil
+    @price_before = nil
 
     @crunch.unpacked.each do |pup|
       puts_pupple(pup) if @verbose
@@ -70,18 +71,24 @@ class Transactor
   end
 
   def short_sell(pup)
+    @price_before = pup.price
     sell pup, :short
   end
 
   def short_buy(pup)
     buy pup, nil
+    profit! pup
+    @price_before = nil
   end
 
   def long_sell(pup)
     sell pup, nil
+    profit! pup
+    @price_before = nil
   end
 
   def long_buy(pup)
+    @price_before = pup.price
     buy pup, :long
   end
 
@@ -104,6 +111,11 @@ class Transactor
   def provision!
     @money -= 2.0 # provision
     @io.puts "Provision -2€! (now have €%.2f)" % @money
+  end
+
+  def profit!(pup)
+    diff = pup.price - @price_before
+    @io.puts( ">> €%.2f Gewinn" % diff)
   end
 
   def summary
