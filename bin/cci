@@ -12,6 +12,7 @@ require 'pry'
 $:.unshift File.expand_path('../../lib', __FILE__)
 require 'cache'
 require 'crunch'
+require 'annual'
 require 'utils'
 
 options = {}
@@ -62,11 +63,19 @@ OptionParser.new do |opts|
   opts.on('--buy_cci N', Integer, "CCI to buy one share (default: -100)") do |v|
     options[:buy_cci] = v
   end
+
+  opts.on('--[no-]annual', 'Use annual data from db/annual.txt') do |v|
+    options[:annual] = v
+  end
 end.parse!
 
 
 if $0 == __FILE__
-  c = Crunch.new(options)
+  c = if options[:annual]
+        Annual.new(options)
+      else
+        Crunch.new(options)
+      end
 
   filefp = if options[:tinker]
              ''
