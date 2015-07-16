@@ -72,7 +72,7 @@ class Transactor
   def sell(pup, pos)
     @money += pup.price
     @position = pos
-    @io.puts "SELL! (now have €%.2f)" % @money
+    @io.puts "#{fmttime(pup.time)} SELL! (now have €%.2f)" % @money
     pup.action = :sell
     provision!
   end
@@ -80,7 +80,7 @@ class Transactor
   def buy(pup, pos)
     @money -= pup.price
     @position = pos
-    @io.puts "BUY! (now have €%.2f)" % @money
+    @io.puts "#{fmttime(pup.time)} BUY! (now have €%.2f)" % @money
     pup.action = :buy
     provision!
   end
