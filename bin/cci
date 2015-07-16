@@ -96,7 +96,7 @@ if $0 == __FILE__
   Utils.plot(c, :t, options.merge(
     label: 'hlc3',
     output: "prices#{filefp}.png",
-    title: 'Preis',
+    title: 'DAX',
   ))
   Utils.plot(c, :cci, options.merge(
     label: 'cci',
