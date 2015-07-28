@@ -134,6 +134,8 @@ class Transactor
              [ pup.price, fmttime(pup.time) ])
     @io.puts( %Q~     %s %.2f --> %.2f (Balance)~ %
              [ word, diff.abs, @money ])
+    @io.puts( %Q~     %i Stunden am Markt~ %
+             [ (pup.time - @before.time)/(60*60) ])
     @io.puts
   end
 
