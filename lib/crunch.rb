@@ -55,7 +55,10 @@ class Crunch
           sma  = recent.reduce(&:+) / recent.length
           mean = recent.map { |p| p - sma }.map(&:abs).reduce(&:+) / recent.length
 
-          pupple.cci = (price - sma) / (factor * mean)
+          cci = (price - sma) / (factor * mean)
+          cci = [cci,-400].max
+          cci = [cci,400].min
+          pupple.cci = cci
         end
 
         # keep the +period+ recent values
