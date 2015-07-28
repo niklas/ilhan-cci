@@ -142,8 +142,8 @@ class Transactor
   end
 
   def summary
-    @io.puts "Angefangen mit %.2f Guthaben und %i Anteilen, nun Guthaben von %.2f, %i Fehltrades" % [
-                    @start_money,    @start_shares,     @money, @fail_trades_count
+    @io.puts "%i Fehltrades" % [
+       @fail_trades_count
     ]
   end
 
