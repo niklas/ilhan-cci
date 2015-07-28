@@ -28,7 +28,7 @@ class Utils
         width = [ options.fetch(:width) { values.length / 3 }, 600].max
         height = [ options.fetch(:height) { 444 }, 400].max
 
-        pl.terminal "png size #{width},#{height}"
+        pl.terminal "png size #{width},#{height} linewidth 3"
         file =  options.fetch(:output) { 'plot.png' }
         pl.output(file)
 
