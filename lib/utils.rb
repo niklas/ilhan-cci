@@ -11,7 +11,7 @@ class Utils
         pl.ylabel options.fetch(:label) { "Werte" }
         pl.timefmt '"%s"'
 
-        pl.arbitrary_lines << 'set format x "%Y-%m-%d %H:%M"'
+        pl.arbitrary_lines << 'set format x "%d.%b"'
         pl.arbitrary_lines << 'set xtics border mirror rotate'
 
         puppels = crunch.unpacked
