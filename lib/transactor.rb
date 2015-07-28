@@ -119,12 +119,20 @@ class Transactor
 
     diff = pup.price - @before.price
 
+    # bei Leerverkäufe ist kauf/verkauf vertauscht
+    if pos == 'short'
+      diff = -diff
+    end
+
+    word = diff < 0 ? 'Verlust' : 'Gewinn'
+
+
     @io.puts( %Q~(%i) Eröffnungskurs %.2f Datum %s %s~ %
              [i, @before.price, fmttime(@before.time), pos] )
     @io.puts( %Q~     Schlusskurs %.2f Enddatum %s~ %
              [ pup.price, pup.time ])
     @io.puts( %Q~     4.00 +- %s %.2f = %.2f (Balance)~ %
-             [ diff < 0 ? 'Verlust' : 'Gewinn', diff.abs, @money ])
+             [ word, diff.abs, @money ])
     @io.puts
   end
 
