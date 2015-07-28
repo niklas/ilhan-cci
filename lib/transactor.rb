@@ -25,6 +25,7 @@ class Transactor
     prev = nil
     @before = nil
     @transaction_index = 0
+    @fail_trades_count = 0
 
     @crunch.unpacked.each do |pup|
       puts_pupple(pup) if @verbose
@@ -125,6 +126,7 @@ class Transactor
       diff = -diff
     end
 
+    @fail_trades_count += 1 if diff < 0
     word = diff < 0 ? 'Verlust' : 'Gewinn'
 
 
@@ -140,8 +142,8 @@ class Transactor
   end
 
   def summary
-    @io.puts "Started with %.2f and %i shares, now have %.2f" % [
-                    @start_money,    @start_shares,     @money
+    @io.puts "Angefangen mit %.2f Guthaben und %i Anteilen, nun Guthaben von %.2f, %i Fehltrades" % [
+                    @start_money,    @start_shares,     @money, @fail_trades_count
     ]
   end
 
