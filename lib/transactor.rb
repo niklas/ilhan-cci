@@ -4,7 +4,7 @@ class Transactor
     @crunch   = options.fetch(:crunch)
     @sell_cci = options.fetch(:sell_cci) { 100 }
     @buy_cci  = options.fetch(:buy_cci) { -100 }
-    @io       = options.fetch(:io) { $stderr }
+    @io       = options.fetch(:io) { $stdout }
 
     # number of shares we start of (1 or 0)
     @start_shares = options.fetch(:start_shares) { 0 }
