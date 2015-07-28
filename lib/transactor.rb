@@ -68,7 +68,7 @@ class Transactor
   private
 
   def puts_pupple(pup)
-    @io.puts "%s\t€%.2f\t[CCI %.3f]" % [fmttime(pup.time), pup.price, pup.cci]
+    @io.puts "%s\t%.2f\t[CCI %.3f]" % [fmttime(pup.time), pup.price, pup.cci]
   end
 
   def short_sell(pup)
@@ -96,7 +96,7 @@ class Transactor
   def sell(pup, pos)
     @money += pup.price
     @position = pos
-    #@io.puts "#{fmttime(pup.time)} SELL! (now have €%.2f)" % @money
+    #@io.puts "#{fmttime(pup.time)} SELL! (now have %.2f)" % @money
     pup.action = :sell
     provision!
   end
@@ -104,7 +104,7 @@ class Transactor
   def buy(pup, pos)
     @money -= pup.price
     @position = pos
-    #@io.puts "#{fmttime(pup.time)} BUY! (now have €%.2f)" % @money
+    #@io.puts "#{fmttime(pup.time)} BUY! (now have %.2f)" % @money
     pup.action = :buy
     provision!
   end
@@ -137,7 +137,7 @@ class Transactor
   end
 
   def summary
-    @io.puts "Started with €%.2f and %i shares, now have €%.2f" % [
+    @io.puts "Started with %.2f and %i shares, now have %.2f" % [
                     @start_money,    @start_shares,     @money
     ]
   end
