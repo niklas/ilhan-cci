@@ -65,7 +65,7 @@ class Utils
     y = pup.send(meth).to_i
     color = case pup.action
             when :sell
-              'light-blue'
+              'blue'
             when :buy
               'orange'
             else
