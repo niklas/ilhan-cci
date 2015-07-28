@@ -131,7 +131,7 @@ class Transactor
     @io.puts( %Q~(%i) Eröffnungskurs %.2f Datum %s %s~ %
              [i, @before.price, fmttime(@before.time), pos] )
     @io.puts( %Q~     Schlusskurs %.2f Enddatum %s~ %
-             [ pup.price, pup.time ])
+             [ pup.price, fmttime(pup.time) ])
     @io.puts( %Q~           %s %.2f --> %.2f (Balance)~ %
              [ word, diff.abs, @money ])
     @io.puts
